@@ -45,20 +45,28 @@ class ErrorHandler:
         type: type -command -argument.
         """
         wrong_word: str = Logger.hint(wrong_word)
-        right_word: str = Logger.hint(right_word)
         Logger.header(message="Excution Error", color="error", emoji="error")
         if type_ == CommandLineTypes.argument.value and command:
-            command: str = Logger.hint(command)
             help_hint: str = Logger.hint(f"ultron {command} {right_word}", "warning")
             return Logger.log(
-                message=f"{type_.title()} {wrong_word} not found inside {command} command, did you mean {right_word}?\n{EmojiEnum.header.value}Try run {help_hint}",
+                message=f"""\
+                {type_.title()} {wrong_word} not found inside {Logger.hint(command)} command, 
+                """.strip()
+                + f"""
+                did you mean {Logger.hint(right_word)}?\n{EmojiEnum.header.value}Try run {help_hint}
+                """.strip(),
                 color="doc",
                 end="\n",
             )
         else:
             help_hint: str = Logger.hint(f"ultron {right_word}", "warning")
             return Logger.log(
-                message=f"{type_.title()} {wrong_word} not found, did you mean {right_word}?\n{EmojiEnum.header.value}Try run {help_hint}",
+                message=f"""
+                {type_.title()} {wrong_word} not found,
+                """.strip()
+                + f"""
+                did you mean {Logger.hint(right_word)}?\n{EmojiEnum.header.value}Try run {help_hint}
+                """.strip(),
                 color="doc",
                 end="\n",
             )
