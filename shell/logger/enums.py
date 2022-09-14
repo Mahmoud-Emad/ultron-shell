@@ -19,3 +19,9 @@ class EmojiEnum(Enum):
     white = ""
     blue = ""
     doc = "\u2728 "
+
+
+class CommandLineTypes(Enum):
+    command = "command"
+    argument = "argument"
+    flag = "flag"

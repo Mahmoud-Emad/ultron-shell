@@ -1,5 +1,6 @@
 class Logger:
     """Intern logger to log messages, debugging in cmd with custom colors."""
+
     @staticmethod
     def log(
         color: str, message, message_with_color: str = None, end="\n", imo=None

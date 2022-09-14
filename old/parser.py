@@ -1,7 +1,6 @@
 from typing import Any, List
 
 
-
 class CommandLine:
     def __init__(self):
         self.commands = {}
@@ -43,7 +42,7 @@ class CommandLine:
 
         for arg in args:
             if arg.lower().startswith("--") or arg.lower().startswith("-"):
-                value = arg[arg.index("=")+1:]
+                value = arg[arg.index("=") + 1 :]
                 flag = arg.lower()
             elif not arg.lower().startswith("--") or not arg.lower().startswith("--"):
                 _arg = arg.lower()

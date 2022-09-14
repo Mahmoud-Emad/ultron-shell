@@ -16,14 +16,14 @@ class CommandLine(UltronCommandLine):
 
     def init(self):
         init = self.add_command("init", help="init command to initialize")
-        self.add_argument(
-            init, "--config", "config file to configure", required=True
-        )
-        self.add_argument(init, "--path", "path of directory")
+        init = self.add_command("inst", help="init command to initialize")
+        inst = self.add_command("pars", help="init command to initialize")
         add = self.add_command("add", help="add config parser")
+        self.add_argument(init, "--config", "config file to configure", required=True)
+        self.add_argument(init, "--path", "path of directory")
         self.add_argument(add, "--name", "name of config parser")
-        self.get_command("add")
-        self.get_argument(add, "name")
+        self.get_command("asdd")
+        self.get_argument(init, "name")
         # print(add)
         # print(arg)
         # self.add_argument(add, "--cat", "cat file")

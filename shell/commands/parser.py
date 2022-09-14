@@ -1,10 +1,11 @@
-from typing import Any, Dict
+from operator import index
+from typing import Any, Dict, List
 from shell.errors.handler import ErrorHandler
+from shell.logger.enums import CommandLineTypes
+from utils.missing_chars import find_argument, find_command
 
 
-
-
-class Namespace():
+class Namespace:
     """Simple object for storing attributes.
     Implements equality by attribute names and values, and provides a simple
     string representation.
@@ -22,12 +23,11 @@ class Namespace():
     def __contains__(self, key):
         return key in self.__dict__
 
+
 class UltronCommandLine:
     def __init__(self):
         self.name_space: Any = Namespace()
         self.help_flags = ["-h", "--help"]
-        # Logger.log(message = "Excuted:", color="success", emoji="success")
-        # Logger.log(message = "command init", color="docs", end="\n")
 
     def add_command(self, command: str, help: str) -> Dict[str, Dict]:
         """
@@ -35,10 +35,9 @@ class UltronCommandLine:
         command: command name,
         help: help string for the command.
         """
-        self.name_space.commands = dict()
-        self.name_space.commands[command] = dict(
-            name = command, help = help, args = dict()
-        )
+        if not hasattr(self.name_space, "commands"):
+            self.name_space.commands = dict()
+        self.name_space.commands[command] = dict(name=command, help=help, args=dict())
 
         return self.name_space.commands[command]
 
@@ -58,7 +57,7 @@ class UltronCommandLine:
         """
         if not argument.startswith("--"):
             argument = f"--{argument}"
-        
+
         command["args"][argument] = dict(help=help, required=required)
         return command
 
@@ -69,8 +68,14 @@ class UltronCommandLine:
         """
         found: bool or Dict[str, Dict] = self.name_space.commands.get(command)
         if not found:
+            if find_command(command, self.name_space.commands):
+                return ErrorHandler.did_you_men(
+                    command,
+                    find_command(command, self.name_space.commands),
+                    CommandLineTypes.command.value,
+                )
             return ErrorHandler.command_not_found(command)
-        command = found    
+        command = found
         return command
 
     def get_argument(self, command: str, argument: str) -> Dict[str, Dict]:
@@ -79,9 +84,15 @@ class UltronCommandLine:
         command: command name
         argument: argument name
         """
-        args: Dict = command.get('args')
         if not argument.startswith("--"):
-        #     # TODO: Error handling.
             argument = f"--{argument}"
-        argument: Dict[str, Dict] = command.get("args").get(argument)
-        return argument
+        found: Dict or None = command.get("args").get(argument)
+        if not found:
+            if find_argument(command, argument):
+                return ErrorHandler.did_you_men(
+                    argument,
+                    find_argument(command, argument),
+                    CommandLineTypes.argument.value,
+                    command=command.get("name"),
+                )
+            return ErrorHandler.argument_not_found(command, argument)
