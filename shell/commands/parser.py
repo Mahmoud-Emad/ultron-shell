@@ -96,3 +96,4 @@ class UltronCommandLine:
                     command=command.get("name"),
                 )
             return ErrorHandler.argument_not_found(command, argument)
+        return found

@@ -2,9 +2,16 @@ from typing import List, Dict
 
 
 def find_argument(command: Dict, argument: str):
-    args: List[str] = command["args"]  # list(.keys())
-    return "name"
-    # print(find_command(argument, args))
+    args: List[str] = list(command["args"].keys())
+    updated_args: List[str] = []
+
+    for key in args:
+        updated_args.append(key.replace("--", ""))
+    return (
+        f"--{find_command(argument, updated_args)}"
+        if find_command(argument, updated_args)
+        else None
+    )
 
 
 def find_command(command: str, commands: Dict) -> str:
