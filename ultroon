@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-from shell.commands.init import excute
-
+from ultron.excute import excute
 
 if __name__ == '__main__':
     excute()

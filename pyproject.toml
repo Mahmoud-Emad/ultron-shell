@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "shell"
+name = "ultron"
 version = "0.1.0"
 description = ""
 authors = ["Mahmoud-Emad <mahmmoud.hassanein@gmail.com>"]

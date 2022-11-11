@@ -14,9 +14,8 @@ def find_argument(command: Dict, argument: str):
     )
 
 
-def find_command(command: str, commands: Dict) -> str:
+def find_command(command: str, commands: List) -> str:
     found_command: str or None = None
-    commands: List[str] = list(commands)
     _command = ""
     founded_commands = []
     _len = 0

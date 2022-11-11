@@ -1,4 +1,4 @@
-from shell import __version__
+from ultron import __version__
 
 
 def test_version():
